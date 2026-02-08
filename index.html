@@ -3,34 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños, Tía!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>¡Feliz Día, Tía Querida!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="card">
-        <h1>¡Feliz Cumpleaños,Rebe!</h1>
-        <p>Eres una persona increíble y te mereces un día lleno de alegría, amor y muchas sorpresas.</p>
-        <div class="heart">❤</div>
-        <p><strong>¡Te queremos mucho!</strong></p>
+    <div class="card-container">
+        <div class="card-front">
+            <div class="header-text">
+                <span>Un mensaje especial para ti</span>
+            </div>
+            <div class="main-content">
+                <h1>¡Feliz Cumpleaños, Tía!</h1>
+                <p>Una vuelta mas al sol</p>
+                <p>Por esta y mas vueltas al sol</p>
+                <div class="signature">Tu [Nombre/Sobri]</div>
+            </div>
+            <div class="footer-text">
+                <span>Pulsa para un abrazo virtual</span>
+            </div>
+        </div>
     </div>
 
     <script>
-        function createConfetti() {
-            const colors = ['#f06292', '#ba68c8', '#ffd54f', '#4fc3f7', '#81c784'];
-            for (let i = 0; i < 50; i++) {
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardContainer = document.querySelector('.card-container');
+            const confettiColors = ['#FFD700', '#FF69B4', '#6495ED', '#32CD32', '#FFA07A'];
+
+            function createConfetti() {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
                 confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                confetti.style.opacity = Math.random();
+                confetti.style.opacity = Math.random() + 0.3;
+                confetti.style.transform = `scale(${Math.random() * 0.8 + 0.2})`;
                 document.body.appendChild(confetti);
+
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
             }
-        }
-        createConfetti();
+
+            cardContainer.addEventListener('click', () => {
+                cardContainer.classList.add('animate-out');
+                // Después de la animación de salida, puedes redirigir o mostrar otro contenido
+                setTimeout(() => {
+                    cardContainer.style.display = 'none'; // Oculta la tarjeta después de la animación
+                    document.body.style.overflow = 'hidden'; // Evita scroll si no hay más contenido
+                    // Aquí podrías mostrar un mensaje de "Gracias por abrir" o simplemente la animación de confeti
+                    setInterval(createConfetti, 100); // Lluvia de confeti
+                }, 800); // Coincide con la duración de la animación 'cardOut'
+            });
+
+            // Lluvia de confeti inicial sutil
+            let initialConfettiCount = 0;
+            const initialConfettiInterval = setInterval(() => {
+                createConfetti();
+                initialConfettiCount++;
+                if (initialConfettiCount > 30) { // Un número moderado para el inicio
+                    clearInterval(initialConfettiInterval);
+                }
+            }, 300);
+        });
     </script>
 </body>
-
 </html>
